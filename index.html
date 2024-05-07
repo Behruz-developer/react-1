@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        function App(params) {
+            const [text, setText] = React.useState('')
+            
+            function inputChange() {
+                if(text.length == 0){
+                return 'hali malumot kritmadingiz'
+            }else if(text.length < 5){
+                return '5 tadan kam malumot kritdingiz'
+            }else if(text.length == 5){
+                return '5 ta malumot kritdingiz'
+            }else if(text.length > 5){
+                return '5 tadan kop malumot kritdingiz'
+            }
+            }
+
+            return(
+                <div>
+                    <input type="text" onChange={(e) => setText(e.target.value)}/> 
+                    <h1>{inputChange()}</h1>
+                </div>
+            )
+        }
+        const root = document.getElementById('root')
+        const app = ReactDOM.createRoot(root)
+        app.render(<App/>)
+    </script>
+</body>
+</html>
