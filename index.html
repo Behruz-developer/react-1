@@ -1,41 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="./style.css">
     <title>Document</title>
 </head>
+
 <body>
     <div id="root"></div>
     <script type="text/babel">
-        function App(params) {
-            const [text, setText] = React.useState('')
-            
-            function inputChange() {
-                if(text.length == 0){
-                return 'hali malumot kritmadingiz'
-            }else if(text.length < 5){
-                return '5 tadan kam malumot kritdingiz'
-            }else if(text.length == 5){
-                return '5 ta malumot kritdingiz'
-            }else if(text.length > 5){
-                return '5 tadan kop malumot kritdingiz'
-            }
-            }
+        function App() {
+            const [notes, setNotes] = React.useState([
+                { id: Math.random(), title: "Vue", time: new Date().toLocaleDateString() },
+                { id: Math.random(), title: "Js", time: new Date().toLocaleDateString() },
+                { id: Math.random(), title: "Css", time: new Date().toLocaleDateString() },
+            ]);
+            const [text, setText] = React.useState('');
+            const [editingId, setEditingId] = React.useState(null);
+            const addOrUpdateNote = (e) => {
+                e.preventDefault();
+                if (editingId) {
+                    const updatedNotes = notes.map(note =>
+                        note.id === editingId ? { ...note, title: text } : note
+                    );
+                    setNotes(updatedNotes);
+                }else {
+                    if (text.length > 1 ) {
+                        const newNote = { id: Math.random(), title: text, time: new Date().toLocaleDateString() }
+                        setNotes([...notes, newNote]);
+                    }
+                }
+                setText('');
+            };
 
-            return(
-                <div>
-                    <input type="text" onChange={(e) => setText(e.target.value)}/> 
-                    <h1>{inputChange()}</h1>
+            const deleteNote = (id) => {
+                setNotes(notes.filter(note => note.id !== id));
+            };
+
+            const startEdit = (id) => {
+                const note = notes.find(note => note.id === id);
+                if (note) {
+                    setText(note.title);
+                    setEditingId(note.id);
+                }
+            };
+
+            return (
+                <div className="container">
+                    <form onSubmit={addOrUpdateNote}>
+                        <input type="text" value={text} onChange={(e) => setText(e.target.value)} />
+                        <button type="submit">Add Note</button>
+                    </form>
+                    <div className="box">
+                        {notes.map(note => (
+                            <div className="card" key={note.id}>
+                                <h2>Title: {note.title}</h2>
+                                <h2>Time: {note.time}</h2>
+                                <button className="delete" onClick={() => deleteNote(note.id)}>X</button>
+                                <button onClick={() => startEdit(note.id)}>Edit</button>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            )
+            );
         }
-        const root = document.getElementById('root')
-        const app = ReactDOM.createRoot(root)
-        app.render(<App/>)
+
+        const root = document.getElementById('root');
+        const app = ReactDOM.createRoot(root);
+        app.render(<App />);
     </script>
 </body>
+
 </html>

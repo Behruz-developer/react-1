@@ -1,0 +1,56 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial;
+}
+.container {
+    max-width: 1140px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+form {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    flex-direction: column;
+    align-items: center;
+}
+.box {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 50px;
+}
+
+button {
+    padding: 5px 10px;
+    background-color: aqua;
+    cursor: pointer;
+    border: none;
+    font-size: 20px;
+    margin-top: 5px;
+}
+.card {
+    background-color: purple;
+    color: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    position: relative;
+}
+.delete{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: red;
+    color: #fff;
+    border-radius: 4px;
+}
+input{
+    font-size: 20px;
+    padding: 10px 20px;
+}
