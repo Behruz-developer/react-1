@@ -21,12 +21,12 @@
                 { id: Math.random(), title: "Css", time: new Date().toLocaleDateString() },
             ]);
             const [text, setText] = React.useState('');
-            const [editingId, setEditingId] = React.useState(null);
+            const [updateId, setUpdateId] = React.useState(null);
             const addOrUpdateNote = (e) => {
                 e.preventDefault();
-                if (editingId) {
+                if (updateId) {
                     const updatedNotes = notes.map(note =>
-                        note.id === editingId ? { ...note, title: text } : note
+                        note.id === updateId ? { ...note, title: text } : note
                     );
                     setNotes(updatedNotes);
                 }else {
@@ -42,11 +42,12 @@
                 setNotes(notes.filter(note => note.id !== id));
             };
 
-            const startEdit = (id) => {
+            const updateCard = (id) => {
                 const note = notes.find(note => note.id === id);
-                if (note) {
+                console.log(note);
+                if (note){
                     setText(note.title);
-                    setEditingId(note.id);
+                    setUpdateId(note.id);
                 }
             };
 
@@ -62,7 +63,7 @@
                                 <h2>Title: {note.title}</h2>
                                 <h2>Time: {note.time}</h2>
                                 <button className="delete" onClick={() => deleteNote(note.id)}>X</button>
-                                <button onClick={() => startEdit(note.id)}>Edit</button>
+                                <button onClick={() => updateCard(note.id)}>Edit</button>
                             </div>
                         ))}
                     </div>
